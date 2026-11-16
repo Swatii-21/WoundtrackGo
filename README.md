@@ -21,3 +21,63 @@ ui/                     streamlit only
 2. Database: write a class with the same methods as DemoRepository
    (patients, patient, add_patient, visits, add_visit, total_visits, last_visit)
    and return it from repo() in ui/common.py.
+
+
+## 🚀 Installation & Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Swatii-21/WoundtrackGo.git
+cd WoundtrackGo
+```
+
+### 2. Create a virtual environment
+
+For macOS/Linux:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+For Windows:
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+### 4. Run the application
+
+```bash
+python -m streamlit run app.py
+```
+
+The application will open in your browser at:
+
+`http://localhost:8501`
+
+## 📁 Project Structure
+
+- `app.py` – Main Streamlit application
+- `backend/` – Backend logic and model pipeline
+- `backend/models/` – Wound analysis models
+- `ui/` – Application pages and UI components
+- `assets/` – Images and visual assets
+- `scripts/` – Utility and testing scripts
+- `weights/` – Model weights directory
+
+## 🛠️ Tech Stack
+
+- Python
+- Streamlit
+- Machine Learning
+- Computer Vision

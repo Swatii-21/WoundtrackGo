@@ -1,6 +1,27 @@
+
+# Python virtual environments
+.venv/
 venv/
+env/
+
+# Python generated files
 __pycache__/
-*.pyc
-.env
-.DS_Store
+*.py[cod]
+.pytest_cache/
+
+# Streamlit
 .streamlit/secrets.toml
+
+# Local database and generated patient data
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+data/visit_images/
+data/*_images/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

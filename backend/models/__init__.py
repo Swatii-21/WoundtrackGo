@@ -1,6 +1,6 @@
-"""The UI only calls run_models(). Everything model-related lives in this package."""
-from backend.models.pipeline import get_pipeline
+"""Demo fallback only. The real pipeline is woundtrack.WoundTrackPipeline, reached through backend.twin_repository."""
+from backend.models import demo
 
 
 def run_models(img, date):
-    return get_pipeline().run(img, date)
+    return demo.run(img, date)

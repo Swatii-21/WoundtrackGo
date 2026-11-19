@@ -2,7 +2,7 @@ import datetime as dt
 import numpy as np, pandas as pd, altair as alt, streamlit as st
 from PIL import Image
 from config import NAVY, TEAL, MINT
-from ui.common import ss, H, LOGO, go, back, card_h, repo, pat
+from ui.common import ss, H, LOGO, go, back, card_h, repo, pat, progress_label
 from backend.imaging import vimgs
 from backend.models import run_models
 
@@ -24,7 +24,7 @@ def profile():
         if vs:
             for c, i in zip(st.columns(len(vs)), reversed(range(len(vs)))): c.button(f"View {i + 1}", key=f"vv{i}", on_click=go, args=("AI Analysis", p["id"], i), use_container_width=True)
     with R, st.container(key="card_sum"):
-        card_h("Patient Summary"); trend = "Not enough data" if len(vs) < 2 else "Improving ↗" if vs[-1]["pct"] < vs[0]["pct"] else "Not improving ↘"
+        card_h("Patient Summary"); trend = progress_label(p["id"])
         for t, v in [("Total Visits", len(vs)), ("Current Risk Level", p["risk"]), ("Overall Progress", trend)]:
             st.markdown(f"<div class='chk'><span class='ms'>check_circle</span><div><small>{t}</small><br><b>{v}</b></div></div>", unsafe_allow_html=True)
         st.button("+ Add New Visit", on_click=go, args=("Add New Visit",), use_container_width=True)

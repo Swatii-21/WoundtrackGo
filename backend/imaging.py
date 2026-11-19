@@ -13,7 +13,7 @@ def synth(seed, pct, mode, n=200):
     d = np.hypot(x - cx, y - cy); w = d < rad; t = d / rad + .18 * np.sin(x / 9 + seed) * np.cos(y / 11)
     if mode == "mask": return Image.fromarray((w * 255).astype("uint8")).convert("RGB")
     if mode == "seg":
-        o = np.zeros((n, n, 3), "uint8"); o[w & (t >= .55)] = (59, 178, 115); o[w & (t < .55)] = (245, 200, 66); o[w & (t < .3)] = (229, 72, 61); return Image.fromarray(o)
+        o = np.zeros((n, n, 3), "uint8"); o[w & (t >= .55)] = (59, 178, 115); o[w & (t < .55)] = (245, 200, 66); o[w & (t < .3)] = (91, 141, 239); return Image.fromarray(o)
     skin = np.array([224, 172, 148]) + r.randn(n, n, 1) * 5
     core = np.clip(np.array([150, 40, 50]) + t[..., None] * np.array([60, 60, 40]), 0, 255)
     m = np.asarray(Image.fromarray((w * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(2)))[..., None] / 255

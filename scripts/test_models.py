@@ -1,13 +1,19 @@
-"""Test the models WITHOUT the UI:  python scripts/test_models.py path/to/wound.jpg"""
+"""Test the real models WITHOUT the UI (nothing is saved):
+
+    python scripts/test_models.py path/to/wound.jpg [aetiology]
+
+aetiology defaults to "Diabetic foot ulcer" (severity only runs for those); e.g. pass "Venous ulcers" to skip it.
+"""
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from PIL import Image
-from backend.models.pipeline import get_pipeline
 
-p = get_pipeline()
-print("status:", p.status)
-for k, e in p.errors.items(): print(f"  {k}: {e}")
-r = p.run(Image.open(sys.argv[1]), "test")
-print({k: v for k, v in r.items() if k not in ("img", "mask", "seg")})
-print("stages using DEMO output:", r["demo"] or "none (all real models)")
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from woundtrack import WoundTrackPipeline
+
+pipe = WoundTrackPipeline()
+a = pipe.analyse_image(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else "Diabetic foot ulcer")
+print("wound   :", a["wound"])
+print("tissue  :", a["tissue"])
+print("severity:", a["severity"])
+for w in a["warnings"]:
+    print("warning :", w)

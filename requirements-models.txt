@@ -1,2 +1,5 @@
-torch
-segmentation-models-pytorch
+# Needed for the real models. Without these the app starts in clearly-labelled DEMO MODE.
+torch>=2.1
+torchvision>=0.16
+segmentation-models-pytorch>=0.3.3
+opencv-python-headless>=4.8

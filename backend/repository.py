@@ -30,6 +30,12 @@ class DemoRepository:
     def add_visit(self, pid, visit):
         self.visits(pid).append(visit)
 
+    def add_visit_from_image(self, pid, image, visit_date, notes=None):
+        """Demo mode: same entry point as TwinRepository. Returns (index_of_new_visit, warnings)."""
+        from backend.models import run_models
+        self.add_visit(pid, run_models(image, visit_date.strftime("%d %b %Y")))
+        return len(self.visits(pid)) - 1, []
+
     def total_visits(self):
         return sum(len(v) for v in self._v.values())
 

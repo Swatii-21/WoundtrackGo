@@ -2,6 +2,7 @@
 import streamlit as st
 from config import NAVY, TEAL, MINT
 from backend.repository import DemoRepository
+from backend.service import get_service, service_error
 
 ss = st.session_state
 def init_state():
@@ -9,9 +10,32 @@ def init_state():
     ss.setdefault("page", "Dashboard"); ss.setdefault("pid", 1); ss.setdefault("history", [])
 
 def repo():
+    """Real digital-twin repository when the models load, otherwise the in-memory demo (see is_demo())."""
     if "_repo" not in ss:
-        ss["_repo"] = DemoRepository()
+        svc = get_service()
+        if svc is not None:
+            from backend.twin_repository import TwinRepository
+            ss["_repo"] = TwinRepository(svc)
+        else:
+            ss["_repo"] = DemoRepository()
     return ss["_repo"]
+
+
+def is_demo():
+    return isinstance(repo(), DemoRepository)
+
+
+def demo_reason():
+    return service_error() or "unknown reason"
+
+
+def progress_label(pid):
+    """Overall progress text. Uses the rule engine when the real repository is active."""
+    r = repo()
+    if hasattr(r, "progress_label"):
+        return r.progress_label(pid)
+    vs = r.visits(pid)
+    return "Not enough data" if len(vs) < 2 else "Improving ↗" if vs[-1]["pct"] < vs[0]["pct"] else "Not improving ↘"
 
 
 def pat(pid):

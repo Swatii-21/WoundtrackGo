@@ -2,7 +2,7 @@ import datetime as dt
 import numpy as np, pandas as pd, altair as alt, streamlit as st
 from PIL import Image
 from config import NAVY, TEAL, MINT
-from ui.common import ss, H, LOGO, go, back, card_h, repo, pat
+from ui.common import ss, H, LOGO, go, back, card_h, repo, pat, is_demo
 from backend.imaging import vimgs
 from backend.models import run_models
 
@@ -27,7 +27,7 @@ def dashboard():
             c[0].markdown(f"<span class='av'>{ini}</span>{p['name']}", unsafe_allow_html=True); c[1].markdown(str(p["age"])); c[2].markdown(p["gender"]); c[3].markdown(p["dx"])
             c[4].markdown(f"<span class='pill {p['risk']}'>{p['risk']}</span>", unsafe_allow_html=True); c[5].markdown(repo().last_visit(p["id"]))
             c[6].button("View Profile", key=f"vp{p['id']}", on_click=go, args=("Patient Profile", p["id"]), use_container_width=True)
-    st.caption("Demo data. Wound assessments are visual, non-clinical impressions.")
+    st.caption("Demo data. Wound assessments are visual, non-clinical impressions." if is_demo() else "Wound assessments are visual, non-clinical impressions.")
 
 
 render = dashboard
